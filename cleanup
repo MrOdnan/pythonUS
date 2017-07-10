@@ -1,0 +1,61 @@
+import subprocess
+import time
+
+device_mapper = []
+loops = []
+
+devmap = subprocess.check_output(['dmsetup', 'ls'])
+loop = subprocess.check_output(['losetup', '-a'])
+
+def splitter(loop):
+         loop_line = loop.splitlines()
+         for loop in loop_line:
+                 work = loop.split(": ")
+                 print work [0]
+
+print "Starting cleanup process...\n"
+time.sleep(1)
+question1 = raw_input("Would you like to check for loops and device mappers?(yes/no)\n")
+if question1 == "yes":
+         print "Checking for mount points...\n"
+         time.sleep(2)
+         if "No devices found" in devmap:
+                 print "There are no device mappers.\n"
+                 time.sleep(2)
+         else:
+                 print devmap
+                 answerdev = raw_input("Would you like to remove any devmappers?\n")
+                 if answerdev == "yes":
+                         print " Function not ready\n"
+                 elif answerdev == "no":
+                         print "Skipping to loops..\n"
+                         time.sleep(2)
+
+         if loop == "":
+                 print "There are no loops.\n"
+         else:
+                 print "Loops found.\n"
+                 time.sleep(2)
+                 print loop
+                 answerloop = raw_input("Would you like to remove any loops?\n")
+                 if answerloop == "yes":
+                         print "\nLoops available for removal:\n"
+                         splitter(loop)
+                         del_loop = raw_input("\nPlease copy and paste the loop you want to delete.\n")
+                         time.sleep(2)
+                         confirm_loop = raw_input("Are you sure you want to remove " + del_loop + " ?\n")
+                         if confirm_loop == "yes":
+                                 print "Good job fuckboy." + del_loop + " removed."
+                         elif confirm_loop == "no":
+                                 print "Deletion canceled." + del_loop + "."
+                         else:
+                                                 print "No input"
+
+                 elif answerloop == "no":
+                         print "no loop no punani\n"
+
+
+elif question1 == "no":
+        print "Ending script."
+else:
+        print "Please answer yes or no. You may also exit with CTRL + C."
